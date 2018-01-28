@@ -12,6 +12,28 @@ and they lived at the bottom of a well.</p>
 <p class="story">...</p>
 """
 from bs4 import BeautifulSoup
+import requests
+n = 0
+link = "https://en.wikipedia.org/wiki/Facebook"
+f = requests.get(link)
+
+html_doc = f.text
+
 soup = BeautifulSoup(html_doc, 'html.parser')
 
-print(soup.prettify())
+print(soup.title.string)
+print()
+
+for link in soup.find_all('a'):
+    LinkString = str(link.get('href'))
+
+    if LinkString[:6]=='/wiki/':
+        if LinkString[:11]!='/wiki/File:':
+            if LinkString[:16]!='/wiki/Wikipedia:':
+                if LinkString[:14]!='/wiki/Special:':
+                    if LinkString[:11]!='/wiki/Help:':
+                        if LinkString[:15]!='/wiki/Category:':
+                            if LinkString[:13]!='/wiki/Portal:':
+                                print(link.get('href'))
+                                n += 1
+print (n)
