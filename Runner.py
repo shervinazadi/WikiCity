@@ -2,32 +2,43 @@ from bs4 import BeautifulSoup
 import requests
 import Utilities
 
-#Setting up the link
 
-LinkName = "Social_networking_service"
-link = "https://en.wikipedia.org/wiki/" + LinkName
 
-#requesting and recieving the data from the link
-f = requests.get(link)
 
-#extracting the data in text format
-html_doc = f.text
 
-#parsing the text into a soup
-soup = BeautifulSoup(html_doc, 'html.parser')
 
-#printing the name of the page
-print(soup.title.string)
-print()
+for i in range(3):
 
-#extracting the links inside the page
-TestLinks = Utilities.ExtractLinks(soup)
+    #Setting up the link
 
-#initializing the graph
-TestGraph = Utilities.Graph()
+    if i==0:
+        LinkName = "/wiki/Social_networking_service"
+    else:
+        LinkName = TestLinks.Articles[1]
 
-#using links to create new nodes and edges
-TestGraph.Expander(TestLinks,LinkName)
+    link = "https://en.wikipedia.org" + LinkName
+    #requesting and recieving the data from the link
+    f = requests.get(link)
+
+    #extracting the data in text format
+    html_doc = f.text
+
+    #parsing the text into a soup
+    soup = BeautifulSoup(html_doc, 'html.parser')
+
+    #printing the name of the page
+    print(soup.title.string)
+    print()
+
+    #extracting the links inside the page
+    TestLinks = Utilities.ExtractLinks(soup)
+
+    if i==0:
+        #initializing the graph
+        TestGraph = Utilities.Graph()
+
+    #using links to create new nodes and edges
+    TestGraph.Expander(TestLinks,LinkName)
 
 #saving the json file
 TestGraph.JsonSaver()
