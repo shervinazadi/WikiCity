@@ -1,6 +1,8 @@
 import pandas as pd
+import networkx as nx
 
 class ExtractLinks:
+
     def __init__(self, soup):
 
         ArticleList = []
@@ -56,3 +58,18 @@ class ExtractLinks:
     
         LinkDataFrame = pd.DataFrame(d)
         '''
+
+class Graph:
+
+    def __init__(self):
+        self.Graph = nx.Graph()
+
+    def Expander(self, LinkExtractedPage,LinkName):
+
+        for i, row in LinkExtractedPage.Articles.iteritems():
+
+            if row[6:] not in self.Graph.nodes:
+                self.Graph.add_node(row[6:])
+                self.Graph.add_edge(row[6:], LinkName, weight=1)
+
+            #nx.set_edge_attributes(self.Graph, 'weight', nx.get_edge_attributes(self.Graph, 'weight')[(row[6:], LinkName)] + 1)
