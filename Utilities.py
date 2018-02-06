@@ -73,7 +73,7 @@ class Graph:
             if row[6:] not in self.Graph.nodes:
                 self.Graph.add_node(row[6:])
                 self.Graph.add_edge(row[6:], LinkName[6:], value=1)
-                
+
             #nx.set_edge_attributes(self.Graph, 'weight', nx.get_edge_attributes(self.Graph, 'weight')[(row[6:], LinkName)] + 1)
 
     def JsonSaver(self):
