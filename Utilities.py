@@ -1,5 +1,7 @@
 import pandas as pd
 import networkx as nx
+from networkx.readwrite import json_graph
+import json
 
 class ExtractLinks:
 
@@ -73,3 +75,11 @@ class Graph:
                 self.Graph.add_edge(row[6:], LinkName, weight=1)
 
             #nx.set_edge_attributes(self.Graph, 'weight', nx.get_edge_attributes(self.Graph, 'weight')[(row[6:], LinkName)] + 1)
+
+    def JsonSaver(self):
+
+        self.JsonData = json_graph.node_link_data(self.Graph)
+
+        with open('D3 Visualizer/result.json', 'w') as fp:
+            json.dump(self.JsonData, fp)
+

@@ -29,5 +29,8 @@ TestGraph = Utilities.Graph()
 #using links to create new nodes and edges
 TestGraph.Expander(TestLinks,LinkName)
 
+#saving the json file
+TestGraph.JsonSaver()
+
 print (TestGraph.Graph.edges)
 print (TestGraph.Graph.number_of_edges())
