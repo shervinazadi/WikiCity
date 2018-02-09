@@ -97,8 +97,10 @@ class Graph:
         self.EdgeCounter = 0
         self.NodeCounter = 0
 
-        self.CsvEdge = self.Graph.edges()
-        self.CsvNode = self.Graph.nodes()
+        self.CsvEdge = list(self.Graph.edges())
+        #print (self.CsvEdge)
+        self.CsvNode =  list(self.Graph.nodes())
+        print (self.CsvNode)
 
         with open(self.EdgePath, 'wt') as csvfile:     ## writing the whole deference phase
             writer = csv.writer(csvfile, delimiter=self.delimiter,

@@ -5,14 +5,33 @@ import time
 
 millis = int(round(time.time() * 1000))
 
-for i in range(20):
+#start of initiator for hierarchial explorer
+#Setting up the link
+LinkName = "/wiki/Social_networking_service"
+
+
+link = "https://en.wikipedia.org" + LinkName
+#requesting and recieving the data from the link
+f = requests.get(link)
+
+#extracting the data in text format
+html_doc = f.text
+
+#parsing the text into a soup
+soup = BeautifulSoup(html_doc, 'html.parser')
+
+#extracting the links inside the page
+FirstTestLinks = Utilities.ExtractLinks(soup)
+#end of initiator for hierarchial explorer
+
+for i in range(400):
 
     #Setting up the link
 
     if i==0:
         LinkName = "/wiki/Social_networking_service"
     else:
-        LinkName = TestLinks.Articles[i]
+        LinkName = FirstTestLinks.Articles[i]
 
     link = "https://en.wikipedia.org" + LinkName
     #requesting and recieving the data from the link
@@ -44,7 +63,7 @@ for i in range(20):
 
 #saving the result files
 TestGraph.JsonSaver()
-#TestGraph.CSVSaver()
+TestGraph.CSVSaver()
 TestGraph.GefxSaver()
 
 #print (TestGraph.Graph.edges)
