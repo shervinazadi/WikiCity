@@ -2,6 +2,7 @@ import pandas as pd
 import networkx as nx
 from networkx.readwrite import json_graph
 import json
+import csv
 
 class ExtractLinks:
 
@@ -83,3 +84,34 @@ class Graph:
         with open('D3 Visualizer/result.json', 'w') as fp:
             json.dump(self.JsonData, fp)
 
+    def GefxSaver(self):
+        nx.write_gexf(self.Graph, "Gephi Visualizer/GEFX/result.gexf")
+
+    def CSVSaver(self):
+
+        self.delimiter = ','
+
+        self.EdgePath = 'Houdini Visualizer/CSV/edges.csv'
+        self.NodePath = 'Houdini Visualizer/CSV/nodes.csv'
+
+        self.EdgeCounter = 0
+        self.NodeCounter = 0
+
+        self.CsvEdge = self.Graph.edges()
+        self.CsvNode = self.Graph.nodes()
+
+        with open(self.EdgePath, 'wt') as csvfile:     ## writing the whole deference phase
+            writer = csv.writer(csvfile, delimiter=self.delimiter,
+                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            for p in range(len(self.CsvEdge)):
+                writer.writerow(self.CsvEdge[p])
+
+                self.EdgeCounter = self.EdgeCounter + 1
+
+        with open(self.NodePath, 'wt') as csvfile:     ## writing the whole deference phase
+            writer = csv.writer(csvfile, delimiter=self.delimiter,
+                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            for p in range(len(self.CsvNode)):
+                writer.writerow(self.CsvNode[p])
+
+                self.NodeCounter = self.NodeCounter + 1

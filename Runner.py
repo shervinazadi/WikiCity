@@ -1,20 +1,18 @@
 from bs4 import BeautifulSoup
 import requests
 import Utilities
+import time
 
+millis = int(round(time.time() * 1000))
 
-
-
-
-
-for i in range(3):
+for i in range(20):
 
     #Setting up the link
 
     if i==0:
         LinkName = "/wiki/Social_networking_service"
     else:
-        LinkName = TestLinks.Articles[1]
+        LinkName = TestLinks.Articles[i]
 
     link = "https://en.wikipedia.org" + LinkName
     #requesting and recieving the data from the link
@@ -27,8 +25,8 @@ for i in range(3):
     soup = BeautifulSoup(html_doc, 'html.parser')
 
     #printing the name of the page
-    print(soup.title.string)
     print()
+    print(soup.title.string)
 
     #extracting the links inside the page
     TestLinks = Utilities.ExtractLinks(soup)
@@ -40,8 +38,14 @@ for i in range(3):
     #using links to create new nodes and edges
     TestGraph.Expander(TestLinks,LinkName)
 
-#saving the json file
-TestGraph.JsonSaver()
+    #printing the time
+    CurMillis = int(round(time.time() * 1000))
+    print (CurMillis - millis)
 
-print (TestGraph.Graph.edges)
-print (TestGraph.Graph.number_of_edges())
+#saving the result files
+TestGraph.JsonSaver()
+#TestGraph.CSVSaver()
+TestGraph.GefxSaver()
+
+#print (TestGraph.Graph.edges)
+#print (TestGraph.Graph.number_of_edges())
