@@ -24,7 +24,7 @@ soup = BeautifulSoup(html_doc, 'html.parser')
 FirstTestLinks = Utilities.ExtractLinks(soup)
 #end of initiator for hierarchial explorer
 
-for i in range(400):
+for i in range(4):
 
     #Setting up the link
 
@@ -45,7 +45,8 @@ for i in range(400):
 
     #printing the name of the page
     print()
-    print(soup.title.string)
+    print ('Page Number : ' + str(i) + ' :')
+    print('Page Name : ' + str(soup.title.string))
 
     #extracting the links inside the page
     TestLinks = Utilities.ExtractLinks(soup)
@@ -55,11 +56,11 @@ for i in range(400):
         TestGraph = Utilities.Graph()
 
     #using links to create new nodes and edges
-    TestGraph.Expander(TestLinks,LinkName)
+    TestGraph.Expander(TestLinks,i)
 
     #printing the time
     CurMillis = int(round(time.time() * 1000))
-    print (CurMillis - millis)
+    print ('Elapsed Time : ' + str((CurMillis - millis)/1000))
 
 #saving the result files
 TestGraph.JsonSaver()

@@ -66,14 +66,17 @@ class Graph:
 
     def __init__(self):
         self.Graph = nx.Graph()
+        self.NodeName = []
+        self.NameBasicNumber = 10000
 
-    def Expander(self, LinkExtractedPage,LinkName):
-
-        for i, row in LinkExtractedPage.Articles.iteritems():
+    def Expander(self, LinkExtractedPage,i):
+        CurrentNum = self.Graph.number_of_edges()
+        for j, row in LinkExtractedPage.Articles.iteritems():
 
             if row[6:] not in self.Graph.nodes:
-                self.Graph.add_node(row[6:])
-                self.Graph.add_edge(row[6:], LinkName[6:], value=1)
+                self.Graph.add_node(CurrentNum + self.NameBasicNumber + j)
+                self.Graph.add_edge(CurrentNum + self.NameBasicNumber + j, self.NameBasicNumber + i, value=1)
+                self.NodeName.append([CurrentNum + self.NameBasicNumber + j,row[6:]])
 
             #nx.set_edge_attributes(self.Graph, 'weight', nx.get_edge_attributes(self.Graph, 'weight')[(row[6:], LinkName)] + 1)
 
@@ -99,7 +102,7 @@ class Graph:
 
         self.CsvEdge = list(self.Graph.edges())
         #print (self.CsvEdge)
-        self.CsvNode =  list(self.Graph.nodes())
+        self.CsvNode =  self.Graph.nodes()
         print (self.CsvNode)
 
         with open(self.EdgePath, 'wt') as csvfile:     ## writing the whole deference phase
@@ -113,7 +116,8 @@ class Graph:
         with open(self.NodePath, 'wt') as csvfile:     ## writing the whole deference phase
             writer = csv.writer(csvfile, delimiter=self.delimiter,
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            for p in range(len(self.CsvNode)):
-                writer.writerow(self.CsvNode[p])
+            for p in range(len(self.NodeName)):
+                writer.writerow(self.NodeName[p])
 
                 self.NodeCounter = self.NodeCounter + 1
+
